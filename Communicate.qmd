@@ -32,28 +32,6 @@ library(dplyr)
 library(caret)
 ```
 
-```{r, include=FALSE}
-#Data Read
-players <- s3read_using(read_parquet, 
-                        object = "players.parquet", 
-                        bucket = bucket) |> clean_names()
-
-runs <- s3read_using(read_parquet, 
-                     object = "runs.parquet", 
-                     bucket = bucket) |> clean_names()
-
-player_play <- s3read_using(read_parquet, 
-                            object = "pp.parquet",   # if you wrote as "pp.parquet"
-                            bucket = bucket) |> clean_names()
-
-games <- s3read_using(read_parquet, 
-                      object = "games.parquet", 
-                      bucket = bucket) |> clean_names()
-predictions <- s3read_using(read_parquet, 
-                      object = "predictions_glm.parquet", 
-                      bucket = bucket) |> clean_names()
-```
-
 ## 7.2 Conclusions
 
 Finally communicating our findings in a neat and presentable way. I have chosen to build an interactive dashboard as the Shiny app.

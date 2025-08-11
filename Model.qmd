@@ -398,7 +398,7 @@ vetiver_pin_write(board, v)
 
 Interface with the model:
 
-```{r}
+```{r, eval=FALSE, include=FALSE}
 pr() |> # goes in dockerfile
   vetiver_api(v) |> 
   pr_run(port = 8080)
