@@ -7,15 +7,15 @@ book:
   author: "Ben Koshy"
   date: "2025-07-29"
   chapters:
-    - index.qmd
-    - question.qmd
+    - Index.qmd
+    - Question.qmd
     - Data import.qmd
-    - tidy.qmd
-    - visualize.qmd
-    - transform.qmd
-    - model.qmd
-    - communicate.qmd
-    - references.qmd
+    - Tidy.qmd
+    - Visualize.qmd
+    - Transform.qmd
+    - Model.qmd
+    - Communicate.qmd
+    - References.qmd
 
 bibliography: references.bib
   
