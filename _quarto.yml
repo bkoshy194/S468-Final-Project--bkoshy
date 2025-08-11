@@ -7,7 +7,7 @@ book:
   author: "Ben Koshy"
   date: "2025-07-29"
   chapters:
-    - Index.qmd
+    - index.qmd
     - Question.qmd
     - Data import.qmd
     - Tidy.qmd
