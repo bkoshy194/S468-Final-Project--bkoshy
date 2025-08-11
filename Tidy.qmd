@@ -4,9 +4,9 @@ author: "Ben Koshy"
 format: html
 ---
 
-# 4 Tidy and Transform
+# Tidy and Transform
 
-## 4.1 Setup
+## Setup
 
 Required packages:
 
@@ -43,7 +43,7 @@ players <- read_csv("players.csv") |> clean_names()
 games <- read_csv("games.csv")|> clean_names()
 ```
 
-## 4.2 Tidying the Data
+## Tidying the Data
 
 The process of Tidying involved putting data into a tidy form and cleaning it. This aims to make later analysis and processing much more convenient. We already cleaned up the column names in the import step itself. We see that the column headers are named well, and our data appears to be correctly specified which is great!
 
@@ -55,7 +55,7 @@ gt(players[1:10,])
 
 The data given by NFL Big Data Bowl is already in quite clean for and is tidy overall. We do however need to do additional processing to help answer our question of interest.
 
-## 4.3 Transforming the Data
+## Transforming the Data
 
 We select specific plays that were runs, add columns for required yards and an indicator for a successful run. The logic for a successful run is as follows:
 
@@ -84,7 +84,7 @@ runs <- runs |>
   )
 ```
 
-## 4.4 Storing Data
+## Storing Data
 
 Required packages:
 

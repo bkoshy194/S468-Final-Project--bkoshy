@@ -5,7 +5,7 @@ library(plumber)
 library(rapidoc)
 library(vetiver)
 b <- board_s3(bucket = "bkoshy-bdb-rushing", region = "us-east-2")
-v <- vetiver_pin_read(b, "glm_model", version = "20250809T171135Z-5141c")
+v <- vetiver_pin_read(b, "glm_model", version = "20250811T193539Z-5141c")
 
 #* @plumber
 function(pr) {

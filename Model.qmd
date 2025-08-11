@@ -4,13 +4,13 @@ author: "Ben Koshy"
 format: html
 ---
 
-# 6 Model
+# Model
 
-## 6.1 Setup
+## Setup
 
 Required Packages
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 #install.packages("rvest")
 #install.packages("stringr")
 #install.packages("tidyverse")
@@ -74,7 +74,7 @@ run_plays <- runs_play_level |>
   mutate(score_diff = pre_snap_home_score - pre_snap_visitor_score)
 ```
 
-## 6.2 Introduction and Initial Steps
+## Introduction and Initial Steps
 
 With some new new found insight from our EDA, we can start developing potential models to work on predicting run play success. We first will try and fit an adequate regression model to the data and use that as a baseline to make predictions. Below we will start exploring potential models.
 
@@ -113,7 +113,7 @@ test  <- model_data[-train_idx, ]
 
 ```
 
-## 6.3 Fitting Potential Models and Evaluations
+## Fitting Potential Models and Evaluations
 
 First we fit a logistic regression.
 
@@ -289,7 +289,7 @@ legend("bottomright", legend = c("Logistic Regression","Tree","Random Forest","X
 
 ```
 
-## 6.4 Moving Forward with Logistic Regression
+## Moving Forward with Logistic Regression
 
 We will move forward with our logistic regression model. We start by reintroducing our glm model fit:
 
@@ -347,7 +347,7 @@ model_data <- model_data |>
   mutate(pred_prob = predict(glm_fit_full, newdata = model_data, type = "response"))
 ```
 
-## 6.5 Model Storage
+## Model Storage
 
 Now that we have our model of choice, we need to store it for later access.
 

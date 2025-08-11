@@ -4,9 +4,9 @@ author: "Ben Koshy"
 format: html
 ---
 
-# 7. Communicate
+# Communicate
 
-## 7.1 Setup
+## Setup
 
 ```{r}
 #install.packages("rvest")
@@ -32,7 +32,7 @@ library(dplyr)
 library(caret)
 ```
 
-## 7.2 Conclusions
+## Conclusions
 
 Finally communicating our findings in a neat and presentable way. I have chosen to build an interactive dashboard as the Shiny app.
 
@@ -54,6 +54,6 @@ It consists of 3 main tabs
 
     -   Takes game features to predict run play success
 
-## 7.3 Limitations
+## Limitations
 
 As you can tell, this isn't a very polished report. I will be the first to say that the quality of this report could have been better with more time.

@@ -12,7 +12,6 @@ book:
     - Data import.qmd
     - Tidy.qmd
     - Visualize.qmd
-    - Transform.qmd
     - Model.qmd
     - Communicate.qmd
     - References.qmd

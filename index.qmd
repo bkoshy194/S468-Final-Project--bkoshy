@@ -5,15 +5,15 @@ bibliography: references.bib
 format: html
 ---
 
-# 1. Project Information
+# Project Information
 
-## 1.1 Abstract
+## Abstract
 
 The modern day NFL offensive strategy has become increasingly passing prevalent. I believe that it would be worthwhile to investigate rushing success in the league to help teams make more informed decisions when it comes to orchestrating an offense that utilizes the run effectively. I have chosen to do this by utilizing the feature rich data available through the Big Data Bowl, which I then will work with to evaluate potential models to create and evaluate predictions. I will then create a Shiny App which allows team staff to evaluate run success based on factors of interest.
 
 This can help a team understand how different features of specific game aspects can help assess the probability of success of a given run play.
 
-## 1.2 Data Being Used
+## Data Being Used
 
 There is a variety of data that is being used from the Big Data Bowl :
 
@@ -345,11 +345,11 @@ Files `tracking_week_[week].csv` contains player tracking data from week `[week]
 
 -   `event`: Tagged play details, including moment of ball snap, pass release, pass catch, tackle, etc (text)
 
-## 1.3 Technical Contributions
+## Technical Contributions
 
 Though a lot of prior work was already done, there were contributions made. First was the custom data engineering and pipeline. Integrating and cleaning four complex NFL datasets (player tracking, plays, player_play, games) to create a unified, analysis-ready database for rush plays. Another was automated feature engineering: e.g., construction of categorical variables, dynamic filtering by position/player, and contextual play metrics (e.g., success by down/yards-to-go).
 
-## 1.4 Constraints
+## Constraints
 
 There are a few constraints to keep in mind for this project:
 
@@ -363,6 +363,6 @@ There are a few constraints to keep in mind for this project:
 
 -   **Project Timeline Limitation:** Due to the limited time frame not as much analysis could be done. An interesting aspect to investigate would have been offensive and defensive skill levels as different teams have varying run defense quality (AKA any team playing Lamar Jackson).
 
-## 1.5 Prior Work
+## Prior Work
 
 There has been a substantial amount of work done using the NFL Big Data Bowl data set. A study by Stat CMU @noauthor_sacks_nodate had a very good study of sack analysis. Vanderbilt had an excellent study of tackling predictions. Another interesting study was of defender movement analysis @noauthor_every_nodate done by Hassaan Inayatali from the University of Toronto. There is so much more work that has been done as well by other participants in the competition.

@@ -4,9 +4,9 @@ author: "Ben Koshy"
 format: html
 ---
 
-# 5 Visualize
+# Visualize
 
-## 5.1 Setup
+## Setup
 
 Required packages:
 
@@ -49,11 +49,11 @@ runs <- runs |>
   )
 ```
 
-## 5.2 Introduction
+## Introduction
 
 We now want to perform some EDA to get a better understanding of our data, which will hopefully give us a good sense of what kind of data would be beneficial for us to consider in our model.
 
-## 5.3 EDA
+## EDA
 
 Let's first look at investigating any trends between play factors and run success.
 
@@ -448,6 +448,6 @@ run_plays |>
   )
 ```
 
-## 5.4 Takeaways
+## Takeaways
 
 We have seen quite a few features that can be of interest from exploring some of our data. Based on what we've seen so far, we can have a better idea of what we can do for our model.
