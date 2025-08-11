@@ -8,22 +8,24 @@ format: html
 
 -   @bobbitt_xgboost_2020
 
+-   @bobbitt2020
+
 -   @construc
 
 -   @devopsf
 
--   @hester
+-   @everyst
 
 -   @national
 
+-   @rforda
+
+-   @sacksbi
+
 -   @nflbig
 
--   @noauthor_devops_nodate
+-   @tidycha
 
--   @noauthor_r_nodate
+-   @wickham_welcome_nodate
 
--   @noauthor_tidy_nodate
-
--   @wickham
-
--   @getting
+-   @citation
