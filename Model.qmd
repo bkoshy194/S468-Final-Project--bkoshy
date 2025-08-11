@@ -356,6 +356,7 @@ Libraries needed for this:
 #install.packages("aws.s3")
 #install.packages("DBI")
 #install.packages("duckdb")
+#install.packages("paws")
 
 library(pins)
 library(vetiver)
