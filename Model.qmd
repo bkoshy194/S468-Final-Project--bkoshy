@@ -279,12 +279,12 @@ glm_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(g
 tree_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(tree_pred_prob))
 rf_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(rf_pred_prob))
 xgb_roc <- pROC::roc(xg_test_label, xgb_pred)
-plot(glm_roc, col = "#e11d26", lwd = 2, main = "ROC Curves (Test Set)"); grid()
+plot(glm_roc, col = "#D50A0A", lwd = 2, main = "ROC Curves (Test Set)"); grid()
 lines(tree_roc, col = "#4392f1", lwd = 2)
-lines(rf_roc, col = "#d71a28", lwd = 2)
+lines(rf_roc, col = "#D50A0A", lwd = 2)
 lines(xgb_roc, col = "#232323", lwd = 2)
 legend("bottomright", legend = c("Logistic Regression","Tree","Random Forest","XGBoost"),
-       col = c("#e11d26","#4392f1","#d71a28","#232323"), lwd=2, bty="n")
+       col = c("#D50A0A","#4392f1","#D50A0A","#232323"), lwd=2, bty="n")
 
 
 ```
@@ -323,7 +323,7 @@ glm_pred <- predict(glm_fit, newdata = test, type = "response")
 glm_pred_label <- ifelse(glm_pred > 0.5, "1", "0")
 library(pROC)
 roc_curve <- roc(test$successful_run, glm_pred)
-plot(roc_curve, col = "#e11d26", lwd = 2, main = "Logistic Regression ROC Curve")
+plot(roc_curve, col = "#D50A0A", lwd = 2, main = "Logistic Regression ROC Curve")
 auc(roc_curve)
 ```
 
@@ -384,11 +384,12 @@ Sys.setenv("AWS_ACCESS_KEY_ID" = Sys.getenv("AWS_ACCESS_KEY_ID"),
 predictions <- model_data |>
   select(play_id, pred_prob)
 
+bucket = "bkoshy-bdb-rushing"
+
 s3write_using(predictions, 
               FUN = write_parquet, 
               bucket = bucket, object = "predictions_glm.parquet")
 
-bucket = "bkoshy-bdb-rushing"
 board <- board_s3(bucket = bucket) 
 
 v <- vetiver_model(glm_fit_full, "glm_model")
