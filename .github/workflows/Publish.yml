@@ -1,0 +1,40 @@
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+name: Quarto Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+  steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+   
+    - name: Quarto Setup
+      uses: quarto-dev/quarto-actions/setup@v2
+    
+    - name: Install system dependencies
+      run: 'sudo apt-get update && sudo apt-get install -y libcur14-openss1-dev'
+    
+    - name: Install R
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: '4.3.0'
+
+    - name: Install R dependencies
+      uses: r-lib./actions/setup-renv@v2
+      with:
+        cache-version: 1
+  
+    - name: Render and Publish
+      uses: quarto-dev/quarto-actions/publish@v2
+    with:
+      target: gh-pages
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCES_KEY }}

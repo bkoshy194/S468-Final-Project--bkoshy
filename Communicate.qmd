@@ -1,0 +1,81 @@
+---
+title: "Communicate"
+author: "Ben Koshy"
+format: html
+---
+
+# 7. Communicate
+
+## 7.1 Setup
+
+```{r}
+#install.packages("rvest")
+#install.packages("stringr")
+#install.packages("tidyverse")
+#install.packages("janitor")
+#install.packages("gt")
+#install.packages("reactable")
+#install.packages("ggplot2")
+#install.packages("ggrepel")
+#install.packages("dpylr")
+#install.packages(caret)
+
+library(rvest)
+library(stringr)
+library(tidyverse)
+library(janitor)
+library(gt)
+library(reactable)
+library(ggplot2)
+library(ggrepel)
+library(dplyr)
+library(caret)
+```
+
+```{r, include=FALSE}
+#Data Read
+players <- s3read_using(read_parquet, 
+                        object = "players.parquet", 
+                        bucket = bucket) |> clean_names()
+
+runs <- s3read_using(read_parquet, 
+                     object = "runs.parquet", 
+                     bucket = bucket) |> clean_names()
+
+player_play <- s3read_using(read_parquet, 
+                            object = "pp.parquet",   # if you wrote as "pp.parquet"
+                            bucket = bucket) |> clean_names()
+
+games <- s3read_using(read_parquet, 
+                      object = "games.parquet", 
+                      bucket = bucket) |> clean_names()
+predictions <- s3read_using(read_parquet, 
+                      object = "predictions_glm.parquet", 
+                      bucket = bucket) |> clean_names()
+```
+
+## 7.2 Conclusions
+
+Finally communicating our findings in a neat and presentable way. I have chosen to build an interactive dashboard as the Shiny app.
+
+I felt as this was the most appropriate way to show my findings and give my intended audience the most useful way to view the information.
+
+The Shiny app can be found here: [BDB Rushing](https://bkoshy194.shinyapps.io/BDB_App/)
+
+It consists of 3 main tabs
+
+-   Player Analysis
+
+    -   Aims to give a summary of runner performance
+
+-   Success Report
+
+    -   This gives a summary of plays that have seen the most success.
+
+-   Prediction
+
+    -   Takes game features to predict run play success
+
+## 7.3 Limitations
+
+As you can tell, this isn't a very polished report. I will be the first to say that the quality of this report could have been better with more time.

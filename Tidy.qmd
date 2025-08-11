@@ -1,0 +1,147 @@
+---
+title: "Tidy and Transform"
+author: "Ben Koshy"
+format: html
+---
+
+# 4 Tidy and Transform
+
+## 4.1 Setup
+
+Required packages:
+
+```{r, message=FALSE, warning=FALSE}
+#install.packages("rvest")
+#install.packages("stringr")
+#install.packages("tidyverse")
+#install.packages("janitor")
+#install.packages("gt")
+#install.packages("reactable")
+#library(pins)
+#library(vetiver)
+#library(plumber)
+#library(aws.s3)
+#library(arrow)
+
+library(rvest)
+library(stringr)
+library(tidyverse)
+library(janitor)
+library(gt)
+library(reactable)
+library(pins)
+library(vetiver)
+library(plumber)
+library(aws.s3)
+library(arrow)
+```
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+plays <- read_csv("plays.csv") |> clean_names()
+pp <- read_csv("player_play.csv") |> clean_names()
+players <- read_csv("players.csv") |> clean_names()
+games <- read_csv("games.csv")|> clean_names()
+```
+
+## 4.2 Tidying the Data
+
+The process of Tidying involved putting data into a tidy form and cleaning it. This aims to make later analysis and processing much more convenient. We already cleaned up the column names in the import step itself. We see that the column headers are named well, and our data appears to be correctly specified which is great!
+
+```{r}
+gt(plays[1:10,])
+gt(pp[1:10,])
+gt(players[1:10,])
+```
+
+The data given by NFL Big Data Bowl is already in quite clean for and is tidy overall. We do however need to do additional processing to help answer our question of interest.
+
+## 4.3 Transforming the Data
+
+We select specific plays that were runs, add columns for required yards and an indicator for a successful run. The logic for a successful run is as follows:
+
+A run is considered "successful" if it gains:
+
+-   **At least 40%** of the yards needed on 1st down,
+
+-   **At least 50%** of the yards needed on 2nd down,
+
+-   **100%** of the yards needed (i.e., picks up the first down or TD) on 3rd or 4th down.
+
+We also remove the unknown rush locations as that provides no value to us.
+
+```{r}
+runs <- plays |> filter(!is.na(rush_location_type)) |>
+                          filter(rush_location_type != "UNKNOWN")
+
+runs <- runs |>
+  mutate(
+    required_yards = case_when(
+      down == 1 ~ 0.4 * yards_to_go,
+      down == 2 ~ 0.5 * yards_to_go,
+      TRUE      ~ yards_to_go
+    ),
+    successful_run = yards_gained >= required_yards
+  )
+```
+
+## 4.4 Storing Data
+
+Required packages:
+
+```{r}
+#install.packages("DBI")
+#install.packages("duckdb")
+#install.packages("aws.s3")
+#install.packages("paws")
+#install.packages("arrow")
+
+library(DBI)
+library(duckdb)
+library(aws.s3)
+library(paws)
+library(arrow)
+```
+
+Note: with initial testing, I ran into issue with the game clock field being time stamp field, so I convert to character here:
+
+```{r}
+runs <- runs |>
+  mutate(game_clock = as.character(game_clock))
+
+```
+
+```{r}
+Sys.setenv("AWS_ACCESS_KEY_ID" = Sys.getenv("AWS_ACCESS_KEY_ID"),
+           "AWS_SECRET_ACCESS_KEY" = Sys.getenv("AWS_SECRET_ACCESS_KEY"),
+           "AWS_DEFAULT_REGION" = "us-east-2")
+bucket = "bkoshy-bdb-rushing"
+s3write_using(runs, FUN = write_parquet, 
+              bucket = bucket, object = "runs.parquet")
+s3write_using(pp, FUN = write_parquet, 
+              bucket = bucket, object = "pp.parquet")
+s3write_using(players, FUN = write_parquet, 
+              bucket = bucket, object = "players.parquet")
+s3write_using(games, FUN = write_parquet, 
+              bucket = bucket, object = "games.parquet")
+```
+
+```{r}
+con <- dbConnect(duckdb())
+
+dbExecute(con, "INSTALL httpfs;")
+```
+
+```{r}
+dbExecute(con, "LOAD httpfs;")
+```
+
+```{r}
+run_data_test <- dbGetQuery(con, "SELECT * 
+                            FROM read_parquet('s3://bkoshy-bdb-rushing/runs.parquet');")
+
+dim(run_data_test)
+```
+
+```{r}
+gt(head(run_data_test, 10))
+```

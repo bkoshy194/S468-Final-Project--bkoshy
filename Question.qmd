@@ -1,0 +1,15 @@
+---
+title: "Question"
+author: "Ben Koshy"
+format: html
+---
+
+# 2 Question
+
+How can we assess and predict the success of run plays? Are there certain plays that can perform better in a given situation? Which plays have seen the most success historically?
+
+## 2.1 Approach
+
+There are many ways to approach answering this question, but what I have chosen to do is classify successful runs based on yardage gained on a specific down. This can be done from the use of the plays data set.
+
+From this set definition of successful run, we then can explore various models to fit with the goal of estimating run success. From fitting the model, we then use the best performing model and then evaluate the accuracy of these predictions.

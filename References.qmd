@@ -1,0 +1,29 @@
+---
+title: "References"
+author: "Ben Koshy"
+format: html
+---
+
+# References
+
+-   @bobbitt_xgboost_2020
+
+-   @construc
+
+-   @devopsf
+
+-   @hester
+
+-   @national
+
+-   @nflbig
+
+-   @noauthor_devops_nodate
+
+-   @noauthor_r_nodate
+
+-   @noauthor_tidy_nodate
+
+-   @wickham
+
+-   @getting

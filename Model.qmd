@@ -1,0 +1,412 @@
+---
+title: "Model"
+author: "Ben Koshy"
+format: html
+---
+
+# 6 Model
+
+## 6.1 Setup
+
+Required Packages
+
+```{r, warning=FALSE}
+#install.packages("rvest")
+#install.packages("stringr")
+#install.packages("tidyverse")
+#install.packages("janitor")
+#install.packages("gt")
+#install.packages("reactable")
+#install.packages("ggplot2")
+#install.packages("ggrepel")
+#install.packages("dpylr")
+#install.packages(caret)
+#install.packages(pROC)
+#install.packages(rpart)
+#install.packages(randomForest)
+#install.packages(xgboost)
+#install.packages(gt)
+
+library(rvest)
+library(stringr)
+library(tidyverse)
+library(janitor)
+library(gt)
+library(reactable)
+library(ggplot2)
+library(ggrepel)
+library(dplyr)
+library(caret)
+library(pROC)
+library(rpart)
+library(randomForest)
+library(xgboost)
+```
+
+```{r, include=FALSE, message=FALSE, warning=FALSE}
+plays <- read_csv("plays.csv") |> clean_names()
+pp <- read_csv("player_play.csv") |> clean_names()
+players <- read_csv("players.csv") |> clean_names()
+
+runs <- plays |> filter(!is.na(rush_location_type)) |>
+                          filter(rush_location_type != "UNKNOWN")
+
+runs <- runs |>
+  mutate(
+    required_yards = case_when(
+      down == 1 ~ 0.4 * yards_to_go,
+      down == 2 ~ 0.5 * yards_to_go,
+      TRUE      ~ yards_to_go
+    ),
+    successful_run = yards_gained >= required_yards
+  )
+runs_play_level <- runs |>
+  left_join(
+    pp |> filter(had_rush_attempt == 1) |>
+      select(game_id, play_id, nfl_id),
+    by = c("game_id", "play_id")
+  ) |>
+  left_join(
+    players |> select(nfl_id, display_name, position, height, weight),
+    by = "nfl_id"
+  )
+```
+
+## 6.2 Introduction and Initial Steps
+
+With some new new found insight from our EDA, we can start developing potential models to work on predicting run play success. We first will try and fit an adequate regression model to the data and use that as a baseline to make predictions. Below we will start exploring potential models.
+
+We first set up our space for predictability and prep the data. We removing NAs at this point to ensure there are
+
+```{r}
+
+set.seed(468) # For reproducibility
+
+model_data <- run_plays |>
+  select(play_id, successful_run, down, yards_to_go, absolute_yardline_number,
+         offense_formation, rush_location_type, expected_points, score_diff,
+         pff_run_concept_primary) |>
+  filter(if_all(everything(), ~ !is.na(.))) |>
+  mutate(
+    successful_run = factor(successful_run, levels = c(FALSE, TRUE), labels = c("0", "1")),
+    down = as.factor(down),
+    offense_formation = as.factor(offense_formation),
+    rush_location_type = as.factor(rush_location_type),
+    pff_run_concept_primary = as.factor(pff_run_concept_primary)
+  )
+
+```
+
+Next we split our training and testing data.
+
+```{r}
+# ---- 3. Train/Test Split ----
+set.seed(468)
+train_idx <- createDataPartition(model_data$successful_run, p = 0.7, list = FALSE)
+train <- model_data[train_idx, ]
+test  <- model_data[-train_idx, ]
+
+# ---- 4. Model Formula (explicit) ----
+# Formula expanded in every model below for clarity
+
+```
+
+## 6.3 Fitting Potential Models and Evaluations
+
+First we fit a logistic regression.
+
+```{r}
+glm_fit <- glm(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                 offense_formation + rush_location_type +
+                 expected_points + score_diff + pff_run_concept_primary,
+               data = train, family = binomial)
+glm_pred <- predict(glm_fit, newdata = test, type = "response")
+glm_prob <- glm_pred
+glm_pred_label <- ifelse(glm_pred > 0.5, "1", "0")
+```
+
+Then we try a decision tree.
+
+```{r}
+tree_fit <- rpart(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                    offense_formation + rush_location_type +
+                    expected_points + score_diff + pff_run_concept_primary,
+                  data = train, method = "class", cp = 0.01)
+tree_pred_prob <- predict(tree_fit, newdata = test, type = "prob")[,"1"]
+tree_pred_label <- predict(tree_fit, newdata = test, type = "class") # returns "0" or "1"
+```
+
+Fitting for random forest.
+
+```{r}
+rf_fit <- randomForest(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                        offense_formation + rush_location_type +
+                        expected_points + score_diff + pff_run_concept_primary,
+                      data = train, ntree = 100, mtry = 3, importance = TRUE)
+rf_pred_prob <- predict(rf_fit, newdata = test, type = "prob")[,"1"]
+rf_pred_label <- predict(rf_fit, newdata = test, type = "response") # returns "0" or "1"
+```
+
+WE fit a XGBoost next.
+
+```{r}
+xg_train_label <- as.integer(as.character(train$successful_run))
+xg_test_label  <- as.integer(as.character(test$successful_run))
+
+train_mm <- model.matrix(~ down + yards_to_go + absolute_yardline_number +
+                          offense_formation + rush_location_type +
+                          expected_points + score_diff + pff_run_concept_primary,
+                        data = train)[,-1]
+test_mm  <- model.matrix(~ down + yards_to_go + absolute_yardline_number +
+                         offense_formation + rush_location_type +
+                         expected_points + score_diff + pff_run_concept_primary,
+                        data = test)[,-1]
+
+dtrain <- xgb.DMatrix(data = train_mm, label = xg_train_label)
+dtest  <- xgb.DMatrix(data = test_mm,  label = xg_test_label)
+xgb_fit <- xgboost(data = dtrain, objective = "binary:logistic", nrounds = 100, verbose = 0)
+xgb_pred <- predict(xgb_fit, newdata = dtest)
+xgb_pred_label <- ifelse(xgb_pred > 0.5, 1, 0)
+```
+
+We create a metric retrieval function to collect the metrics for each fit and then compile results for comparison.
+
+```{r, warning=FALSE, message=FALSE}
+get_metrics <- function(truth, prob, pred_label) {
+  levels_used <- c("0", "1")
+  truth_f <- factor(as.character(truth), levels = levels_used)
+  pred_label_f <- factor(as.character(pred_label), levels = levels_used)
+  acc <- mean(pred_label_f == truth_f)
+  # Convert AUC from S3 <auc> object to numeric
+  auc <- as.numeric(pROC::roc(as.numeric(truth_f), as.numeric(prob))$auc)
+  pr  <- caret::precision(truth_f, pred_label_f)
+  rec <- caret::recall(truth_f, pred_label_f)
+  f1  <- caret::F_meas(truth_f, pred_label_f)
+  tibble(Accuracy = acc, ROC_AUC = auc, Precision = pr, Recall = rec, F1 = f1)
+}
+
+res_glm   <- get_metrics(test$successful_run, glm_prob, glm_pred_label)
+res_tree  <- get_metrics(test$successful_run, tree_pred_prob, tree_pred_label)
+res_rf    <- get_metrics(test$successful_run, rf_pred_prob, rf_pred_label)
+res_xgb   <- get_metrics(xg_test_label, xgb_pred, xgb_pred_label) # for xgboost, label must be 0/1
+
+results <- bind_rows(
+    Logistic_Regression = res_glm,
+    Decision_Tree       = res_tree,
+    Random_Forest       = res_rf,
+    XGBoost             = res_xgb,
+    .id = "Model"
+)
+
+results |>
+  mutate(across(where(is.numeric), round, 3)) |>
+  gt() |>
+  tab_header(title = "Model Comparison for Predicting Run Success")
+```
+
+Some theory to cover here:
+
+-   Accuracy: proportion of all predictions that are correct ( $\frac{TP + TN}{TP + TN +FP + FN}$)
+
+    -   Higher value suggests model predicts more accurately.
+
+        -   TP - True Positive
+
+        -   FP - False Positive
+
+        -   TN - True Negative
+
+        -   FN - False Negative
+
+-   ROC AUC (Receiver Operating Characteristics Area Under Curve): measures model's model discrimination.
+
+    -   Close to 1 means the model has better discrimination and near 0.5 suggests the model is no better than random chance
+
+-   Precision: Proportion of actual successes to predicted successes ($\frac{TP}{TP + FP}$)
+
+    -   High precision means fewer false positives
+
+        -   TP - True Positive
+
+        -   FP - False Positive
+
+-   Recall: Proportion of correctly identifies runs as successes of actual successful runs ($\frac{TP}{TP + FN}$)
+
+    -   High recall means there are fewer false negatives
+
+        -   TP - True Positive
+
+        -   FN - False Negative
+
+-   F1: Measure of balance between precision and recall ($2*\frac{Precision * Recall}{Precision + Recall}$).
+
+    -   The higher the better
+
+From the table summary we observe that logistic regression has the best overall accuracy (0.584) and ROC AUC (0.624). It offers decent balance of precision (0.517) and recall (0.559), with moderate F1 (0.537). The decision tree had slightly lower accuracy/AUC, but notably higher precision (0.702)—however, this comes with much lower recall. Its F1 (0.608) is highest, indicating the best relationship of precision/recall. For the random forest & XGBoost: Slightly lower on all metrics compared to logistic regression and decision tree. Precision/recall/F1 are all moderate. More complex models did not outperform these baselines, suggesting that the chosen features and the inherent unpredictability of run success favor simpler, interpretable approaches.
+
+```{r}
+# Random Forest
+rf_imp <- as.data.frame(importance(rf_fit))
+rf_imp$Variable <- rownames(rf_imp)
+rf_imp |>
+  arrange(desc(MeanDecreaseGini)) |>
+  ggplot(aes(x = reorder(Variable, MeanDecreaseGini), y = MeanDecreaseGini)) +
+  geom_col(fill = "#D50A0A", color = "#ffffff", alpha = 0.9) +
+  coord_flip() +
+  labs(title = "Random Forest Variable Importance", x = "Feature", y = "Mean Decrease in Gini") +
+  theme_minimal(base_size = 15)
+```
+
+```{r}
+# XGBoost
+xgb_imp <- xgb.importance(model = xgb_fit)
+xgb_imp |>
+  top_n(15, Gain) |>
+  ggplot(aes(x = reorder(Feature, Gain), y = Gain)) +
+  geom_col(fill = "#D50A0A", color = "#ffffff", alpha = 0.9) +
+  coord_flip() +
+  labs(title = "XGBoost Variable Importance", x = "Feature", y = "Gain") +
+  theme_minimal(base_size = 15) 
+```
+
+It would be worthwhile to look at the ROC curves.
+
+```{r, message=FALSE}
+#ROC Curves (Optional)
+glm_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(glm_prob))
+tree_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(tree_pred_prob))
+rf_roc <- pROC::roc(as.numeric(as.character(test$successful_run)), as.numeric(rf_pred_prob))
+xgb_roc <- pROC::roc(xg_test_label, xgb_pred)
+plot(glm_roc, col = "#e11d26", lwd = 2, main = "ROC Curves (Test Set)"); grid()
+lines(tree_roc, col = "#4392f1", lwd = 2)
+lines(rf_roc, col = "#d71a28", lwd = 2)
+lines(xgb_roc, col = "#232323", lwd = 2)
+legend("bottomright", legend = c("Logistic Regression","Tree","Random Forest","XGBoost"),
+       col = c("#e11d26","#4392f1","#d71a28","#232323"), lwd=2, bty="n")
+
+
+```
+
+## 6.4 Moving Forward with Logistic Regression
+
+We will move forward with our logistic regression model. We start by reintroducing our glm model fit:
+
+```{r}
+glm_fit <- glm(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                 offense_formation + rush_location_type +
+                 expected_points + score_diff + pff_run_concept_primary,
+               data = train, family = binomial)
+summary(glm_fit)
+
+```
+
+```{r, warning=FALSE}
+library(broom)
+tidy(glm_fit) |>
+  mutate(
+    odds_ratio = exp(estimate)
+  ) |>
+  select(term, estimate, odds_ratio, std.error, p.value) |>
+  arrange(desc(abs(estimate))) |>
+  gt::gt() |>
+  gt::fmt_number(columns = c(estimate, odds_ratio, std.error), decimals = 3) |>
+  gt::tab_header(title = "Logistic Regression Coefficient Estimates and Odds Ratios")
+
+```
+
+Model predictions:
+
+```{r, message=FALSE}
+glm_pred <- predict(glm_fit, newdata = test, type = "response")
+glm_pred_label <- ifelse(glm_pred > 0.5, "1", "0")
+library(pROC)
+roc_curve <- roc(test$successful_run, glm_pred)
+plot(roc_curve, col = "#e11d26", lwd = 2, main = "Logistic Regression ROC Curve")
+auc(roc_curve)
+```
+
+We fit the final logistic regression model (with just the training fold):
+
+```{r}
+glm_fit <- glm(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                 offense_formation + rush_location_type +
+                 expected_points + score_diff + pff_run_concept_primary,
+               data = train, family = binomial)
+```
+
+Below for reference we fit with the full set of model data:
+
+```{r}
+glm_fit_full <- glm(successful_run ~ down + yards_to_go + absolute_yardline_number +
+                      offense_formation + rush_location_type +
+                      expected_points + score_diff + pff_run_concept_primary,
+                    data = model_data, family = binomial)
+model_data <- model_data |>
+  mutate(pred_prob = predict(glm_fit_full, newdata = model_data, type = "response"))
+```
+
+## 6.5 Model Storage
+
+Now that we have our model of choice, we need to store it for later access.
+
+Libraries needed for this:
+
+```{r, message=FALSE}
+#install.packages("pins")
+#install.packages("vetiver")
+#install.packages("plumber")
+#install.packages("aws.s3")
+#install.packages("DBI")
+#install.packages("duckdb")
+
+library(pins)
+library(vetiver)
+library(plumber)
+library(aws.s3)
+library(DBI)
+library(duckdb)
+```
+
+Store model data and predicted values. glm_fit_full is our model, so that is what we will set into Vetiver to store our model.
+
+```{r}
+library(pins)
+library(vetiver)
+library(plumber)
+library(aws.s3)
+library(arrow)
+Sys.setenv("AWS_ACCESS_KEY_ID" = Sys.getenv("AWS_ACCESS_KEY_ID"),
+           "AWS_SECRET_ACCESS_KEY" = Sys.getenv("AWS_SECRET_ACCESS_KEY"),
+           "AWS_DEFAULT_REGION" = "us-east-2")
+
+predictions <- model_data |>
+  select(play_id, pred_prob)
+
+s3write_using(predictions, 
+              FUN = write_parquet, 
+              bucket = bucket, object = "predictions_glm.parquet")
+
+bucket = "bkoshy-bdb-rushing"
+board <- board_s3(bucket = bucket) 
+
+v <- vetiver_model(glm_fit_full, "glm_model")
+vetiver_pin_write(board, v)
+```
+
+Interface with the model:
+
+```{r}
+pr() |> # goes in dockerfile
+  vetiver_api(v) |> 
+  pr_run(port = 8080)
+```
+
+Creating Dockerfile:
+
+```{r}
+vetiver_prepare_docker(
+    board, 
+    "glm_model", 
+    docker_args = list(port = 8080)
+)
+```

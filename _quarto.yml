@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Ben Koshy Stat 468 Final Project"
+  author: "Ben Koshy"
+  date: "2025-07-29"
+  chapters:
+    - index.qmd
+    - question.qmd
+    - Data import.qmd
+    - tidy.qmd
+    - visualize.qmd
+    - transform.qmd
+    - model.qmd
+    - communicate.qmd
+    - references.qmd
+
+bibliography: references.bib
+  
+execute:
+  freeze: auto
+  
+format:
+  html:
+    theme: cosmo
+    code-fold: true
+editor: visual
+

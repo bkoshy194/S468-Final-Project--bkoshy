@@ -1,0 +1,45 @@
+---
+title: "Data Import"
+author: "Ben Koshy"
+format: html
+---
+
+# 3 Import
+
+## 3.1 Setup
+
+Required packages:
+
+```{r, message=FALSE}
+#install.packages(rvest)
+#install.packages(stringr)
+#install.packages(tidyverse)
+#install.packages(janitor)
+#install.packages(gt)
+#install.packages(reactable)
+
+library(rvest)
+library(stringr)
+library(tidyverse)
+library(janitor)
+library(gt)
+library(reactable)
+
+```
+
+## 3.2 About
+
+For the import we simply import all the data required from the NFL Big Data Bowl. Due to the limitation of the the number of years of data, there isn't variety available in various seasons. What is worth being picky about is the amount of tracking data that we choose to include. For the sake of this study, we don't need to look at tracking data.
+
+## 3.3 Data Import
+
+We read the csv files:
+
+```{r, message=FALSE, warning=FALSE}
+plays <- read_csv("plays.csv") |> clean_names()
+pp <- read_csv("player_play.csv") |> clean_names()
+players <- read_csv("players.csv") |> clean_names()
+games <- read_csv("games.csv")|> clean_names()
+```
+
+Here we do implement the clean_names to do column header clean up, which steps a bit into our tidy phase.
