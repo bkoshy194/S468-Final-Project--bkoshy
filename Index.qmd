@@ -19,7 +19,7 @@ There is a variety of data that is being used from the Big Data Bowl :
 
 @nflbig
 
-### **File descriptions** 
+### **File descriptions**
 
 Game data: The `games.csv` contains the teams playing in each game. The *key* variable is **`gameId`**.\
 Play data: The `plays.csv` file contains play-level information from each game. The *key* variables are **`gameId`** and **`playId`**.\
