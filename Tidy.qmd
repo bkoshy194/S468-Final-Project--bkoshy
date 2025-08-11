@@ -111,21 +111,6 @@ runs <- runs |>
 ```
 
 ```{r}
-Sys.setenv("AWS_ACCESS_KEY_ID" = Sys.getenv("AWS_ACCESS_KEY_ID"),
-           "AWS_SECRET_ACCESS_KEY" = Sys.getenv("AWS_SECRET_ACCESS_KEY"),
-           "AWS_DEFAULT_REGION" = "us-east-2")
-bucket = "bkoshy-bdb-rushing"
-s3write_using(runs, FUN = write_parquet, 
-              bucket = bucket, object = "runs.parquet")
-s3write_using(pp, FUN = write_parquet, 
-              bucket = bucket, object = "pp.parquet")
-s3write_using(players, FUN = write_parquet, 
-              bucket = bucket, object = "players.parquet")
-s3write_using(games, FUN = write_parquet, 
-              bucket = bucket, object = "games.parquet")
-```
-
-```{r}
 con <- dbConnect(duckdb())
 
 dbExecute(con, "INSTALL httpfs;")

@@ -5,7 +5,7 @@ project:
 book:
   title: "Ben Koshy Stat 468 Final Project"
   author: "Ben Koshy"
-  date: "2025-07-29"
+  date: "2025-08-11"
   chapters:
     - index.qmd
     - Question.qmd
