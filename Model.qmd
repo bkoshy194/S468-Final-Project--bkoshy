@@ -373,6 +373,7 @@ library(vetiver)
 library(plumber)
 library(aws.s3)
 library(arrow)
+library(paws)
 Sys.setenv("AWS_ACCESS_KEY_ID" = Sys.getenv("AWS_ACCESS_KEY_ID"),
            "AWS_SECRET_ACCESS_KEY" = Sys.getenv("AWS_SECRET_ACCESS_KEY"),
            "AWS_DEFAULT_REGION" = "us-east-2")
