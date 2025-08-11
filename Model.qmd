@@ -102,14 +102,10 @@ model_data <- run_plays |>
 Next we split our training and testing data.
 
 ```{r}
-# ---- 3. Train/Test Split ----
 set.seed(468)
 train_idx <- createDataPartition(model_data$successful_run, p = 0.7, list = FALSE)
 train <- model_data[train_idx, ]
 test  <- model_data[-train_idx, ]
-
-# ---- 4. Model Formula (explicit) ----
-# Formula expanded in every model below for clarity
 
 ```
 
