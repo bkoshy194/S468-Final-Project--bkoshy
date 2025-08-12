@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ben Koshy">
+
+<title>6&nbsp; Model – Ben Koshy Stat 468 Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Communicate.html" rel="next">
+<link href="./Visualize.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Model.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Ben Koshy Stat 468 Final Project</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Question.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Question</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Import</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tidy and Transform</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualize</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Communicate</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./References.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model"><span class="header-section-number">7</span> Model</a>
+  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">7.1</span> Setup</a></li>
+  <li><a href="#introduction-and-initial-steps" id="toc-introduction-and-initial-steps" class="nav-link" data-scroll-target="#introduction-and-initial-steps"><span class="header-section-number">7.2</span> Introduction and Initial Steps</a></li>
+  <li><a href="#fitting-potential-models-and-evaluations" id="toc-fitting-potential-models-and-evaluations" class="nav-link" data-scroll-target="#fitting-potential-models-and-evaluations"><span class="header-section-number">7.3</span> Fitting Potential Models and Evaluations</a></li>
+  <li><a href="#moving-forward-with-logistic-regression" id="toc-moving-forward-with-logistic-regression" class="nav-link" data-scroll-target="#moving-forward-with-logistic-regression"><span class="header-section-number">7.4</span> Moving Forward with Logistic Regression</a></li>
+  <li><a href="#model-storage" id="toc-model-storage" class="nav-link" data-scroll-target="#model-storage"><span class="header-section-number">7.5</span> Model Storage</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ben Koshy </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="model" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Model</h1>
+<section id="setup" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="setup"><span class="header-section-number">7.1</span> Setup</h2>
+<p>Required Packages</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("rvest")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("stringr")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidyverse")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("janitor")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("gt")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("reactable")</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggplot2")</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggrepel")</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("dpylr")</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(caret)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(pROC)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(rpart)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(randomForest)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(xgboost)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(gt)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reactable)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="introduction-and-initial-steps" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="introduction-and-initial-steps"><span class="header-section-number">7.2</span> Introduction and Initial Steps</h2>
+<p>With some new new found insight from our EDA, we can start developing potential models to work on predicting run play success. We first will try and fit an adequate regression model to the data and use that as a baseline to make predictions. Below we will start exploring potential models.</p>
+<p>We first set up our space for predictability and prep the data. We removing NAs at this point to ensure there are</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">468</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> run_plays <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(play_id, successful_run, down, yards_to_go, absolute_yardline_number,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         offense_formation, rush_location_type, expected_points, score_diff,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         pff_run_concept_primary) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), <span class="sc">~</span> <span class="sc">!</span><span class="fu">is.na</span>(.))) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">successful_run =</span> <span class="fu">factor</span>(successful_run, <span class="at">levels =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1"</span>)),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">down =</span> <span class="fu">as.factor</span>(down),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">offense_formation =</span> <span class="fu">as.factor</span>(offense_formation),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">rush_location_type =</span> <span class="fu">as.factor</span>(rush_location_type),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">pff_run_concept_primary =</span> <span class="fu">as.factor</span>(pff_run_concept_primary)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Next we split our training and testing data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">468</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(model_data<span class="sc">$</span>successful_run, <span class="at">p =</span> <span class="fl">0.7</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> model_data[train_idx, ]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> model_data[<span class="sc">-</span>train_idx, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="fitting-potential-models-and-evaluations" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="fitting-potential-models-and-evaluations"><span class="header-section-number">7.3</span> Fitting Potential Models and Evaluations</h2>
+<p>First we fit a logistic regression.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> train, <span class="at">family =</span> binomial)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>glm_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>glm_prob <span class="ot">&lt;-</span> glm_pred</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>glm_pred_label <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(glm_pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"1"</span>, <span class="st">"0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Then we try a decision tree.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tree_fit <span class="ot">&lt;-</span> <span class="fu">rpart</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> train, <span class="at">method =</span> <span class="st">"class"</span>, <span class="at">cp =</span> <span class="fl">0.01</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>tree_pred_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"prob"</span>)[,<span class="st">"1"</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tree_pred_label <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"class"</span>) <span class="co"># returns "0" or "1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Fitting for random forest.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                        offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                        expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> train, <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">mtry =</span> <span class="dv">3</span>, <span class="at">importance =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>rf_pred_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"prob"</span>)[,<span class="st">"1"</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>rf_pred_label <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"response"</span>) <span class="co"># returns "0" or "1"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>WE fit a XGBoost next.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>xg_train_label <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(train<span class="sc">$</span>successful_run))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>xg_test_label  <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(test<span class="sc">$</span>successful_run))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>train_mm <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                          offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                          expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> train)[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>test_mm  <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                         offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                         expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> test)[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>dtrain <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> train_mm, <span class="at">label =</span> xg_train_label)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>dtest  <span class="ot">&lt;-</span> <span class="fu">xgb.DMatrix</span>(<span class="at">data =</span> test_mm,  <span class="at">label =</span> xg_test_label)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>xgb_fit <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> dtrain, <span class="at">objective =</span> <span class="st">"binary:logistic"</span>, <span class="at">nrounds =</span> <span class="dv">100</span>, <span class="at">verbose =</span> <span class="dv">0</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>xgb_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(xgb_fit, <span class="at">newdata =</span> dtest)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>xgb_pred_label <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(xgb_pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We create a metric retrieval function to collect the metrics for each fit and then compile results for comparison.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>get_metrics <span class="ot">&lt;-</span> <span class="cf">function</span>(truth, prob, pred_label) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  levels_used <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  truth_f <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">as.character</span>(truth), <span class="at">levels =</span> levels_used)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  pred_label_f <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">as.character</span>(pred_label), <span class="at">levels =</span> levels_used)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  acc <span class="ot">&lt;-</span> <span class="fu">mean</span>(pred_label_f <span class="sc">==</span> truth_f)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert AUC from S3 &lt;auc&gt; object to numeric</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  auc <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pROC<span class="sc">::</span><span class="fu">roc</span>(<span class="fu">as.numeric</span>(truth_f), <span class="fu">as.numeric</span>(prob))<span class="sc">$</span>auc)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  pr  <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">precision</span>(truth_f, pred_label_f)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  rec <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">recall</span>(truth_f, pred_label_f)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  f1  <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">F_meas</span>(truth_f, pred_label_f)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Accuracy =</span> acc, <span class="at">ROC_AUC =</span> auc, <span class="at">Precision =</span> pr, <span class="at">Recall =</span> rec, <span class="at">F1 =</span> f1)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>res_glm   <span class="ot">&lt;-</span> <span class="fu">get_metrics</span>(test<span class="sc">$</span>successful_run, glm_prob, glm_pred_label)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>res_tree  <span class="ot">&lt;-</span> <span class="fu">get_metrics</span>(test<span class="sc">$</span>successful_run, tree_pred_prob, tree_pred_label)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>res_rf    <span class="ot">&lt;-</span> <span class="fu">get_metrics</span>(test<span class="sc">$</span>successful_run, rf_pred_prob, rf_pred_label)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>res_xgb   <span class="ot">&lt;-</span> <span class="fu">get_metrics</span>(xg_test_label, xgb_pred, xgb_pred_label) <span class="co"># for xgboost, label must be 0/1</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Logistic_Regression =</span> res_glm,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">Decision_Tree       =</span> res_tree,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">Random_Forest       =</span> res_rf,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">XGBoost             =</span> res_xgb,</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">.id =</span> <span class="st">"Model"</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>results <span class="sc">|&gt;</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), round, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Model Comparison for Predicting Run Success"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="heihgdyeuz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#heihgdyeuz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#heihgdyeuz thead, #heihgdyeuz tbody, #heihgdyeuz tfoot, #heihgdyeuz tr, #heihgdyeuz td, #heihgdyeuz th {
+  border-style: none;
+}
+
+#heihgdyeuz p {
+  margin: 0;
+  padding: 0;
+}
+
+#heihgdyeuz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#heihgdyeuz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#heihgdyeuz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#heihgdyeuz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#heihgdyeuz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#heihgdyeuz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#heihgdyeuz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#heihgdyeuz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#heihgdyeuz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#heihgdyeuz .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#heihgdyeuz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#heihgdyeuz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#heihgdyeuz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#heihgdyeuz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#heihgdyeuz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#heihgdyeuz .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#heihgdyeuz .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#heihgdyeuz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#heihgdyeuz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#heihgdyeuz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#heihgdyeuz .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#heihgdyeuz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#heihgdyeuz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#heihgdyeuz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#heihgdyeuz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#heihgdyeuz .gt_left {
+  text-align: left;
+}
+
+#heihgdyeuz .gt_center {
+  text-align: center;
+}
+
+#heihgdyeuz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#heihgdyeuz .gt_font_normal {
+  font-weight: normal;
+}
+
+#heihgdyeuz .gt_font_bold {
+  font-weight: bold;
+}
+
+#heihgdyeuz .gt_font_italic {
+  font-style: italic;
+}
+
+#heihgdyeuz .gt_super {
+  font-size: 65%;
+}
+
+#heihgdyeuz .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#heihgdyeuz .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#heihgdyeuz .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#heihgdyeuz .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#heihgdyeuz .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#heihgdyeuz .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#heihgdyeuz .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#heihgdyeuz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#heihgdyeuz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border">Model Comparison for Predicting Run Success</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Accuracy" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Accuracy</th>
+<th id="ROC_AUC" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ROC_AUC</th>
+<th id="Precision" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Precision</th>
+<th id="Recall" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Recall</th>
+<th id="F1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">F1</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Model">Logistic_Regression</td>
+<td class="gt_row gt_right" headers="Accuracy">0.584</td>
+<td class="gt_row gt_right" headers="ROC_AUC">0.624</td>
+<td class="gt_row gt_right" headers="Precision">0.517</td>
+<td class="gt_row gt_right" headers="Recall">0.559</td>
+<td class="gt_row gt_right" headers="F1">0.537</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Model">Decision_Tree</td>
+<td class="gt_row gt_right" headers="Accuracy">0.577</td>
+<td class="gt_row gt_right" headers="ROC_AUC">0.611</td>
+<td class="gt_row gt_right" headers="Precision">0.702</td>
+<td class="gt_row gt_right" headers="Recall">0.536</td>
+<td class="gt_row gt_right" headers="F1">0.608</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Model">Random_Forest</td>
+<td class="gt_row gt_right" headers="Accuracy">0.563</td>
+<td class="gt_row gt_right" headers="ROC_AUC">0.593</td>
+<td class="gt_row gt_right" headers="Precision">0.493</td>
+<td class="gt_row gt_right" headers="Recall">0.534</td>
+<td class="gt_row gt_right" headers="F1">0.513</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Model">XGBoost</td>
+<td class="gt_row gt_right" headers="Accuracy">0.556</td>
+<td class="gt_row gt_right" headers="ROC_AUC">0.588</td>
+<td class="gt_row gt_right" headers="Precision">0.484</td>
+<td class="gt_row gt_right" headers="Recall">0.527</td>
+<td class="gt_row gt_right" headers="F1">0.505</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Some theory to cover here:</p>
+<ul>
+<li><p>Accuracy: proportion of all predictions that are correct ( <span class="math inline">\(\frac{TP + TN}{TP + TN +FP + FN}\)</span>)</p>
+<ul>
+<li><p>Higher value suggests model predicts more accurately.</p>
+<ul>
+<li><p>TP - True Positive</p></li>
+<li><p>FP - False Positive</p></li>
+<li><p>TN - True Negative</p></li>
+<li><p>FN - False Negative</p></li>
+</ul></li>
+</ul></li>
+<li><p>ROC AUC (Receiver Operating Characteristics Area Under Curve): measures model’s model discrimination.</p>
+<ul>
+<li>Close to 1 means the model has better discrimination and near 0.5 suggests the model is no better than random chance</li>
+</ul></li>
+<li><p>Precision: Proportion of actual successes to predicted successes (<span class="math inline">\(\frac{TP}{TP + FP}\)</span>)</p>
+<ul>
+<li><p>High precision means fewer false positives</p>
+<ul>
+<li><p>TP - True Positive</p></li>
+<li><p>FP - False Positive</p></li>
+</ul></li>
+</ul></li>
+<li><p>Recall: Proportion of correctly identifies runs as successes of actual successful runs (<span class="math inline">\(\frac{TP}{TP + FN}\)</span>)</p>
+<ul>
+<li><p>High recall means there are fewer false negatives</p>
+<ul>
+<li><p>TP - True Positive</p></li>
+<li><p>FN - False Negative</p></li>
+</ul></li>
+</ul></li>
+<li><p>F1: Measure of balance between precision and recall (<span class="math inline">\(2*\frac{Precision * Recall}{Precision + Recall}\)</span>).</p>
+<ul>
+<li>The higher the better</li>
+</ul></li>
+</ul>
+<p>From the table summary we observe that logistic regression has the best overall accuracy (0.584) and ROC AUC (0.624). It offers decent balance of precision (0.517) and recall (0.559), with moderate F1 (0.537). The decision tree had slightly lower accuracy/AUC, but notably higher precision (0.702)—however, this comes with much lower recall. Its F1 (0.608) is highest, indicating the best relationship of precision/recall. For the random forest &amp; XGBoost: Slightly lower on all metrics compared to logistic regression and decision tree. Precision/recall/F1 are all moderate. More complex models did not outperform these baselines, suggesting that the chosen features and the inherent unpredictability of run success favor simpler, interpretable approaches.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rf_imp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">importance</span>(rf_fit))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>rf_imp<span class="sc">$</span>Variable <span class="ot">&lt;-</span> <span class="fu">rownames</span>(rf_imp)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>rf_imp <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(MeanDecreaseGini)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Variable, MeanDecreaseGini), <span class="at">y =</span> MeanDecreaseGini)) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#D50A0A"</span>, <span class="at">color =</span> <span class="st">"#ffffff"</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Random Forest Variable Importance"</span>, <span class="at">x =</span> <span class="st">"Feature"</span>, <span class="at">y =</span> <span class="st">"Mean Decrease in Gini"</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Model_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># XGBoost</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>xgb_imp <span class="ot">&lt;-</span> <span class="fu">xgb.importance</span>(<span class="at">model =</span> xgb_fit)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>xgb_imp <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">15</span>, Gain) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Feature, Gain), <span class="at">y =</span> Gain)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#D50A0A"</span>, <span class="at">color =</span> <span class="st">"#ffffff"</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"XGBoost Variable Importance"</span>, <span class="at">x =</span> <span class="st">"Feature"</span>, <span class="at">y =</span> <span class="st">"Gain"</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Model_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It would be worthwhile to look at the ROC curves.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ROC Curves (Optional)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>glm_roc <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(<span class="fu">as.numeric</span>(<span class="fu">as.character</span>(test<span class="sc">$</span>successful_run)), <span class="fu">as.numeric</span>(glm_prob))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>tree_roc <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(<span class="fu">as.numeric</span>(<span class="fu">as.character</span>(test<span class="sc">$</span>successful_run)), <span class="fu">as.numeric</span>(tree_pred_prob))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>rf_roc <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(<span class="fu">as.numeric</span>(<span class="fu">as.character</span>(test<span class="sc">$</span>successful_run)), <span class="fu">as.numeric</span>(rf_pred_prob))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>xgb_roc <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(xg_test_label, xgb_pred)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(glm_roc, <span class="at">col =</span> <span class="st">"#D50A0A"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"ROC Curves (Test Set)"</span>); <span class="fu">grid</span>()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tree_roc, <span class="at">col =</span> <span class="st">"#4392f1"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(rf_roc, <span class="at">col =</span> <span class="st">"#D50A0A"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xgb_roc, <span class="at">col =</span> <span class="st">"#232323"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Logistic Regression"</span>,<span class="st">"Tree"</span>,<span class="st">"Random Forest"</span>,<span class="st">"XGBoost"</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#D50A0A"</span>,<span class="st">"#4392f1"</span>,<span class="st">"#D50A0A"</span>,<span class="st">"#232323"</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Model_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="moving-forward-with-logistic-regression" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="moving-forward-with-logistic-regression"><span class="header-section-number">7.4</span> Moving Forward with Logistic Regression</h2>
+<p>We will move forward with our logistic regression model. We start by reintroducing our glm model fit:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                 offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                 expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> train, <span class="at">family =</span> binomial)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = successful_run ~ down + yards_to_go + absolute_yardline_number + 
+    offense_formation + rush_location_type + expected_points + 
+    score_diff + pff_run_concept_primary, family = binomial, 
+    data = train)
+
+Coefficients:
+                                      Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                          1.582e+00  4.545e-01   3.480 0.000502 ***
+down2                               -3.363e-01  8.412e-02  -3.998 6.38e-05 ***
+down3                               -1.203e+00  1.462e-01  -8.229  &lt; 2e-16 ***
+down4                               -1.401e+00  3.045e-01  -4.601 4.21e-06 ***
+yards_to_go                         -1.812e-01  1.385e-02 -13.083  &lt; 2e-16 ***
+absolute_yardline_number            -6.203e-04  1.270e-03  -0.488 0.625350    
+offense_formationI_FORM              4.738e-01  4.096e-01   1.157 0.247452    
+offense_formationJUMBO              -1.582e-01  4.694e-01  -0.337 0.736076    
+offense_formationPISTOL              3.809e-01  4.158e-01   0.916 0.359606    
+offense_formationSHOTGUN             4.765e-01  4.003e-01   1.190 0.233891    
+offense_formationSINGLEBACK          2.687e-01  4.032e-01   0.667 0.505065    
+offense_formationWILDCAT             6.593e-01  5.065e-01   1.302 0.193049    
+rush_location_typeINSIDE_RIGHT       6.047e-02  8.318e-02   0.727 0.467213    
+rush_location_typeOUTSIDE_LEFT      -3.005e-01  9.264e-02  -3.244 0.001179 ** 
+rush_location_typeOUTSIDE_RIGHT     -1.852e-01  8.983e-02  -2.061 0.039280 *  
+expected_points                     -5.380e-02  2.120e-02  -2.538 0.011149 *  
+score_diff                          -3.469e-05  3.507e-03  -0.010 0.992109    
+pff_run_concept_primaryDRAW          3.570e-01  2.282e-01   1.564 0.117767    
+pff_run_concept_primaryFB RUN        1.939e-01  4.854e-01   0.399 0.689588    
+pff_run_concept_primaryINSIDE ZONE   7.000e-02  1.422e-01   0.492 0.622637    
+pff_run_concept_primaryMAN           1.646e-01  1.493e-01   1.102 0.270266    
+pff_run_concept_primaryOUTSIDE ZONE -5.060e-02  1.395e-01  -0.363 0.716771    
+pff_run_concept_primaryPOWER         2.930e-01  1.599e-01   1.832 0.066920 .  
+pff_run_concept_primaryPULL LEAD     3.906e-02  1.644e-01   0.238 0.812257    
+pff_run_concept_primarySNEAK         1.787e+00  3.949e-01   4.526 6.00e-06 ***
+pff_run_concept_primaryTRAP          4.017e-01  2.651e-01   1.515 0.129737    
+pff_run_concept_primaryTRICK         6.577e-01  2.189e-01   3.005 0.002657 ** 
+pff_run_concept_primaryUNDEFINED    -1.488e-01  3.676e-01  -0.405 0.685652    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 6123.3  on 4430  degrees of freedom
+Residual deviance: 5787.2  on 4403  degrees of freedom
+AIC: 5843.2
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(glm_fit) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">odds_ratio =</span> <span class="fu">exp</span>(estimate)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, estimate, odds_ratio, std.error, p.value) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(estimate))) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns =</span> <span class="fu">c</span>(estimate, odds_ratio, std.error), <span class="at">decimals =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(<span class="at">title =</span> <span class="st">"Logistic Regression Coefficient Estimates and Odds Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="htwdrfnvsr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#htwdrfnvsr table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#htwdrfnvsr thead, #htwdrfnvsr tbody, #htwdrfnvsr tfoot, #htwdrfnvsr tr, #htwdrfnvsr td, #htwdrfnvsr th {
+  border-style: none;
+}
+
+#htwdrfnvsr p {
+  margin: 0;
+  padding: 0;
+}
+
+#htwdrfnvsr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#htwdrfnvsr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#htwdrfnvsr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#htwdrfnvsr .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#htwdrfnvsr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#htwdrfnvsr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#htwdrfnvsr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#htwdrfnvsr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#htwdrfnvsr .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#htwdrfnvsr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#htwdrfnvsr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#htwdrfnvsr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#htwdrfnvsr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#htwdrfnvsr .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#htwdrfnvsr .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#htwdrfnvsr .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#htwdrfnvsr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#htwdrfnvsr .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#htwdrfnvsr .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#htwdrfnvsr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#htwdrfnvsr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#htwdrfnvsr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#htwdrfnvsr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#htwdrfnvsr .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#htwdrfnvsr .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#htwdrfnvsr .gt_left {
+  text-align: left;
+}
+
+#htwdrfnvsr .gt_center {
+  text-align: center;
+}
+
+#htwdrfnvsr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#htwdrfnvsr .gt_font_normal {
+  font-weight: normal;
+}
+
+#htwdrfnvsr .gt_font_bold {
+  font-weight: bold;
+}
+
+#htwdrfnvsr .gt_font_italic {
+  font-style: italic;
+}
+
+#htwdrfnvsr .gt_super {
+  font-size: 65%;
+}
+
+#htwdrfnvsr .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#htwdrfnvsr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#htwdrfnvsr .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#htwdrfnvsr .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#htwdrfnvsr .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#htwdrfnvsr .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#htwdrfnvsr .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#htwdrfnvsr .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#htwdrfnvsr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border">Logistic Regression Coefficient Estimates and Odds Ratios</th>
+</tr>
+<tr class="gt_col_headings even">
+<th id="term" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">term</th>
+<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">estimate</th>
+<th id="odds_ratio" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">odds_ratio</th>
+<th id="std.error" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">std.error</th>
+<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">p.value</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primarySNEAK</td>
+<td class="gt_row gt_right" headers="estimate">1.787</td>
+<td class="gt_row gt_right" headers="odds_ratio">5.973</td>
+<td class="gt_row gt_right" headers="std.error">0.395</td>
+<td class="gt_row gt_right" headers="p.value">6.003280e-06</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">(Intercept)</td>
+<td class="gt_row gt_right" headers="estimate">1.582</td>
+<td class="gt_row gt_right" headers="odds_ratio">4.862</td>
+<td class="gt_row gt_right" headers="std.error">0.454</td>
+<td class="gt_row gt_right" headers="p.value">5.017038e-04</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">down4</td>
+<td class="gt_row gt_right" headers="estimate">−1.401</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.246</td>
+<td class="gt_row gt_right" headers="std.error">0.304</td>
+<td class="gt_row gt_right" headers="p.value">4.205369e-06</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">down3</td>
+<td class="gt_row gt_right" headers="estimate">−1.203</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.300</td>
+<td class="gt_row gt_right" headers="std.error">0.146</td>
+<td class="gt_row gt_right" headers="p.value">1.884548e-16</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">offense_formationWILDCAT</td>
+<td class="gt_row gt_right" headers="estimate">0.659</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.933</td>
+<td class="gt_row gt_right" headers="std.error">0.506</td>
+<td class="gt_row gt_right" headers="p.value">1.930492e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryTRICK</td>
+<td class="gt_row gt_right" headers="estimate">0.658</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.930</td>
+<td class="gt_row gt_right" headers="std.error">0.219</td>
+<td class="gt_row gt_right" headers="p.value">2.657282e-03</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">offense_formationSHOTGUN</td>
+<td class="gt_row gt_right" headers="estimate">0.476</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.610</td>
+<td class="gt_row gt_right" headers="std.error">0.400</td>
+<td class="gt_row gt_right" headers="p.value">2.338907e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">offense_formationI_FORM</td>
+<td class="gt_row gt_right" headers="estimate">0.474</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.606</td>
+<td class="gt_row gt_right" headers="std.error">0.410</td>
+<td class="gt_row gt_right" headers="p.value">2.474517e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryTRAP</td>
+<td class="gt_row gt_right" headers="estimate">0.402</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.494</td>
+<td class="gt_row gt_right" headers="std.error">0.265</td>
+<td class="gt_row gt_right" headers="p.value">1.297365e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">offense_formationPISTOL</td>
+<td class="gt_row gt_right" headers="estimate">0.381</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.464</td>
+<td class="gt_row gt_right" headers="std.error">0.416</td>
+<td class="gt_row gt_right" headers="p.value">3.596058e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryDRAW</td>
+<td class="gt_row gt_right" headers="estimate">0.357</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.429</td>
+<td class="gt_row gt_right" headers="std.error">0.228</td>
+<td class="gt_row gt_right" headers="p.value">1.177673e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">down2</td>
+<td class="gt_row gt_right" headers="estimate">−0.336</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.714</td>
+<td class="gt_row gt_right" headers="std.error">0.084</td>
+<td class="gt_row gt_right" headers="p.value">6.384988e-05</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">rush_location_typeOUTSIDE_LEFT</td>
+<td class="gt_row gt_right" headers="estimate">−0.301</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.740</td>
+<td class="gt_row gt_right" headers="std.error">0.093</td>
+<td class="gt_row gt_right" headers="p.value">1.178895e-03</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryPOWER</td>
+<td class="gt_row gt_right" headers="estimate">0.293</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.340</td>
+<td class="gt_row gt_right" headers="std.error">0.160</td>
+<td class="gt_row gt_right" headers="p.value">6.691976e-02</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">offense_formationSINGLEBACK</td>
+<td class="gt_row gt_right" headers="estimate">0.269</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.308</td>
+<td class="gt_row gt_right" headers="std.error">0.403</td>
+<td class="gt_row gt_right" headers="p.value">5.050648e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryFB RUN</td>
+<td class="gt_row gt_right" headers="estimate">0.194</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.214</td>
+<td class="gt_row gt_right" headers="std.error">0.485</td>
+<td class="gt_row gt_right" headers="p.value">6.895876e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">rush_location_typeOUTSIDE_RIGHT</td>
+<td class="gt_row gt_right" headers="estimate">−0.185</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.831</td>
+<td class="gt_row gt_right" headers="std.error">0.090</td>
+<td class="gt_row gt_right" headers="p.value">3.927991e-02</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">yards_to_go</td>
+<td class="gt_row gt_right" headers="estimate">−0.181</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.834</td>
+<td class="gt_row gt_right" headers="std.error">0.014</td>
+<td class="gt_row gt_right" headers="p.value">4.099729e-39</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryMAN</td>
+<td class="gt_row gt_right" headers="estimate">0.165</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.179</td>
+<td class="gt_row gt_right" headers="std.error">0.149</td>
+<td class="gt_row gt_right" headers="p.value">2.702658e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">offense_formationJUMBO</td>
+<td class="gt_row gt_right" headers="estimate">−0.158</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.854</td>
+<td class="gt_row gt_right" headers="std.error">0.469</td>
+<td class="gt_row gt_right" headers="p.value">7.360764e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryUNDEFINED</td>
+<td class="gt_row gt_right" headers="estimate">−0.149</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.862</td>
+<td class="gt_row gt_right" headers="std.error">0.368</td>
+<td class="gt_row gt_right" headers="p.value">6.856518e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryINSIDE ZONE</td>
+<td class="gt_row gt_right" headers="estimate">0.070</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.073</td>
+<td class="gt_row gt_right" headers="std.error">0.142</td>
+<td class="gt_row gt_right" headers="p.value">6.226370e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">rush_location_typeINSIDE_RIGHT</td>
+<td class="gt_row gt_right" headers="estimate">0.060</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.062</td>
+<td class="gt_row gt_right" headers="std.error">0.083</td>
+<td class="gt_row gt_right" headers="p.value">4.672130e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">expected_points</td>
+<td class="gt_row gt_right" headers="estimate">−0.054</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.948</td>
+<td class="gt_row gt_right" headers="std.error">0.021</td>
+<td class="gt_row gt_right" headers="p.value">1.114862e-02</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryOUTSIDE ZONE</td>
+<td class="gt_row gt_right" headers="estimate">−0.051</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.951</td>
+<td class="gt_row gt_right" headers="std.error">0.139</td>
+<td class="gt_row gt_right" headers="p.value">7.167712e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">pff_run_concept_primaryPULL LEAD</td>
+<td class="gt_row gt_right" headers="estimate">0.039</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.040</td>
+<td class="gt_row gt_right" headers="std.error">0.164</td>
+<td class="gt_row gt_right" headers="p.value">8.122569e-01</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">absolute_yardline_number</td>
+<td class="gt_row gt_right" headers="estimate">−0.001</td>
+<td class="gt_row gt_right" headers="odds_ratio">0.999</td>
+<td class="gt_row gt_right" headers="std.error">0.001</td>
+<td class="gt_row gt_right" headers="p.value">6.253502e-01</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">score_diff</td>
+<td class="gt_row gt_right" headers="estimate">0.000</td>
+<td class="gt_row gt_right" headers="odds_ratio">1.000</td>
+<td class="gt_row gt_right" headers="std.error">0.004</td>
+<td class="gt_row gt_right" headers="p.value">9.921090e-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Model predictions:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>glm_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(glm_fit, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>glm_pred_label <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(glm_pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"1"</span>, <span class="st">"0"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>roc_curve <span class="ot">&lt;-</span> <span class="fu">roc</span>(test<span class="sc">$</span>successful_run, glm_pred)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_curve, <span class="at">col =</span> <span class="st">"#D50A0A"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Logistic Regression ROC Curve"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Model_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auc</span>(roc_curve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Area under the curve: 0.6244</code></pre>
+</div>
+</div>
+<p>We fit the final logistic regression model (with just the training fold):</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> train, <span class="at">family =</span> binomial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Below for reference we fit with the full set of model data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>glm_fit_full <span class="ot">&lt;-</span> <span class="fu">glm</span>(successful_run <span class="sc">~</span> down <span class="sc">+</span> yards_to_go <span class="sc">+</span> absolute_yardline_number <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                      offense_formation <span class="sc">+</span> rush_location_type <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                      expected_points <span class="sc">+</span> score_diff <span class="sc">+</span> pff_run_concept_primary,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> model_data, <span class="at">family =</span> binomial)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> model_data <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred_prob =</span> <span class="fu">predict</span>(glm_fit_full, <span class="at">newdata =</span> model_data, <span class="at">type =</span> <span class="st">"response"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="model-storage" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="model-storage"><span class="header-section-number">7.5</span> Model Storage</h2>
+<p>Now that we have our model of choice, we need to store it for later access.</p>
+<p>Libraries needed for this:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("pins")</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("vetiver")</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("plumber")</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("aws.s3")</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("DBI")</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("duckdb")</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("paws")</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pins)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vetiver)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plumber)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aws.s3)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Store model data and predicted values. glm_fit_full is our model, so that is what we will set into Vetiver to store our model.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pins)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vetiver)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plumber)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aws.s3)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'arrow'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:lubridate':
+
+    duration</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:utils':
+
+    timestamp</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(paws)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="st">"AWS_ACCESS_KEY_ID"</span> <span class="ot">=</span> <span class="fu">Sys.getenv</span>(<span class="st">"AWS_ACCESS_KEY_ID"</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"AWS_SECRET_ACCESS_KEY"</span> <span class="ot">=</span> <span class="fu">Sys.getenv</span>(<span class="st">"AWS_SECRET_ACCESS_KEY"</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">"AWS_DEFAULT_REGION"</span> <span class="ot">=</span> <span class="st">"us-east-2"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> model_data <span class="sc">|&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(play_id, pred_prob)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>bucket <span class="ot">=</span> <span class="st">"bkoshy-bdb-rushing"</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">s3write_using</span>(predictions, </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">FUN =</span> write_parquet, </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">bucket =</span> bucket, <span class="at">object =</span> <span class="st">"predictions_glm.parquet"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>board <span class="ot">&lt;-</span> <span class="fu">board_s3</span>(<span class="at">bucket =</span> bucket) </span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">vetiver_model</span>(glm_fit_full, <span class="st">"glm_model"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="fu">vetiver_pin_write</span>(board, v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Creating new version '20250811T230948Z-5141c'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Writing to pin 'glm_model'
+
+Create a Model Card for your published model
+• Model Cards provide a framework for transparent, responsible reporting
+• Use the vetiver `.Rmd` template as a place to start</code></pre>
+</div>
+</div>
+<p>Interface with the model:</p>
+<p>Creating Dockerfile:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vetiver_prepare_docker</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    board, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"glm_model"</span>, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">docker_args =</span> <span class="fu">list</span>(<span class="at">port =</span> <span class="dv">8080</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>- The lockfile is already up to date.</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Visualize.html" class="pagination-link" aria-label="Visualize">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualize</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Communicate.html" class="pagination-link" aria-label="Communicate">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Communicate</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
