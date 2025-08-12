@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ben Koshy">
+<meta name="dcterms.date" content="2025-08-11">
+
+<title>Ben Koshy Stat 468 Final Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Question.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Ben Koshy Stat 468 Final Project</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Index</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Question.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Question</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Import</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Tidy and Transform</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualize</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Communicate</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./References.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#project-information" id="toc-project-information" class="nav-link active" data-scroll-target="#project-information"><span class="header-section-number">1</span> Project Information</a>
+  <ul class="collapse">
+  <li><a href="#abstract" id="toc-abstract" class="nav-link" data-scroll-target="#abstract"><span class="header-section-number">1.1</span> Abstract</a></li>
+  <li><a href="#data-being-used" id="toc-data-being-used" class="nav-link" data-scroll-target="#data-being-used"><span class="header-section-number">1.2</span> Data Being Used</a>
+  <ul class="collapse">
+  <li><a href="#file-descriptions" id="toc-file-descriptions" class="nav-link" data-scroll-target="#file-descriptions"><span class="header-section-number">1.2.1</span> <strong>File descriptions</strong></a></li>
+  </ul></li>
+  <li><a href="#technical-contributions" id="toc-technical-contributions" class="nav-link" data-scroll-target="#technical-contributions"><span class="header-section-number">1.3</span> Technical Contributions</a></li>
+  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints"><span class="header-section-number">1.4</span> Constraints</a></li>
+  <li><a href="#prior-work" id="toc-prior-work" class="nav-link" data-scroll-target="#prior-work"><span class="header-section-number">1.5</span> Prior Work</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ben Koshy Stat 468 Final Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ben Koshy </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="project-information" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Project Information</h1>
+<section id="abstract" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="abstract"><span class="header-section-number">1.1</span> Abstract</h2>
+<p>The modern day NFL offensive strategy has become increasingly passing prevalent. I believe that it would be worthwhile to investigate rushing success in the league to help teams make more informed decisions when it comes to orchestrating an offense that utilizes the run effectively. I have chosen to do this by utilizing the feature rich data available through the Big Data Bowl, which I then will work with to evaluate potential models to create and evaluate predictions. I will then create a Shiny App which allows team staff to evaluate run success based on factors of interest.</p>
+<p>This can help a team understand how different features of specific game aspects can help assess the probability of success of a given run play.</p>
+</section>
+<section id="data-being-used" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="data-being-used"><span class="header-section-number">1.2</span> Data Being Used</h2>
+<p>There is a variety of data that is being used from the Big Data Bowl :</p>
+<p><span class="citation" data-cites="nflbig"><span>“NFL Big Data Bowl 2025”</span> (<a href="#ref-nflbig" role="doc-biblioref">n.d.</a>)</span></p>
+<section id="file-descriptions" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="file-descriptions"><span class="header-section-number">1.2.1</span> <strong>File descriptions</strong></h3>
+<p>Game data: The <code>games.csv</code> contains the teams playing in each game. The <em>key</em> variable is <strong><code>gameId</code></strong>.<br>
+Play data: The <code>plays.csv</code> file contains play-level information from each game. The <em>key</em> variables are <strong><code>gameId</code></strong> and <strong><code>playId</code></strong>.<br>
+Player data: The <code>players.csv</code> file contains player-level information from players that participated in any of the tracking data files. The <em>key</em> variable is <strong><code>nflId</code></strong>.<br>
+Player play data: The <code>player_play.csv</code> file contains player-level stats for each game and play. The <em>key</em> variables are <strong><code>gameId</code></strong>, <strong><code>playId</code></strong>, and <strong><code>nflId</code></strong>.<br>
+Tracking data: Files <code>tracking_week_[week].csv</code> contain player tracking data from week number <code>[week]</code>. The <em>key</em> variables are <strong><code>gameId</code></strong>, <strong><code>playId</code></strong>, and <strong><code>nflId</code></strong>.</p>
+<section id="game-data" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="game-data"><span class="header-section-number">1.2.1.1</span> <strong>Game data</strong></h4>
+<ul>
+<li><p><strong><code>gameId</code></strong>: Game identifier, unique (numeric)</p></li>
+<li><p><code>season</code>: Season of game</p></li>
+<li><p><code>week</code>: Week of game</p></li>
+<li><p><code>gameDate</code>: Game Date (time, mm/dd/yyyy)</p></li>
+<li><p><code>gameTimeEastern</code>: Start time of game (time, HH:MM:SS, EST)</p></li>
+<li><p><code>homeTeamAbbr</code>: Home team three-letter code (text)</p></li>
+<li><p><code>visitorTeamAbbr</code>: Visiting team three-letter code (text)</p></li>
+<li><p><code>homeFinalScore</code>: The total amount of points scored by the home team in the game (numeric)</p></li>
+<li><p><code>visitorFinalScore</code>: The total amount of points scored by the visiting team in the game (numeric)</p></li>
+</ul>
+</section>
+<section id="play-data" class="level4" data-number="1.2.1.2">
+<h4 data-number="1.2.1.2" class="anchored" data-anchor-id="play-data"><span class="header-section-number">1.2.1.2</span> <strong>Play data</strong></h4>
+<ul>
+<li><p><strong><code>gameId</code></strong>: Game identifier, unique (numeric)</p></li>
+<li><p><strong><code>playId</code></strong>: Play identifier, not unique across games (numeric)</p></li>
+<li><p><code>playDescription</code>: Description of play (text)</p></li>
+<li><p><code>quarter</code>: Game quarter (numeric)</p></li>
+<li><p><code>down</code>: Down (numeric)</p></li>
+<li><p><code>yardsToGo</code>: Distance needed for a first down (numeric)</p></li>
+<li><p><code>possessionTeam</code>: Team abbr of team on offense with possession of ball (text)</p></li>
+<li><p><code>defensiveTeam</code>: Team abbr of team on defense (text)</p></li>
+<li><p><code>yardlineSide</code>: 3-letter team code corresponding to line-of-scrimmage (text)</p></li>
+<li><p><code>yardlineNumber</code>: Yard line at line-of-scrimmage (numeric)</p></li>
+<li><p><code>gameClock</code>: Time on clock of play (MM:SS)</p></li>
+<li><p><code>preSnapHomeScore</code>: Home score prior to the play (numeric)</p></li>
+<li><p><code>preSnapVisitorScore</code>: Visiting team score prior to the play (numeric)</p></li>
+<li><p><code>playNullifiedByPenalty</code>: Whether or not an accepted penalty on the play cancels the play outcome. Y stands for yes and N stands for no. (text)</p></li>
+<li><p><code>absoluteYardlineNumber</code>: Distance from end zone for possession team (numeric)</p></li>
+<li><p><code>preSnapHomeTeamWinProbability</code>: The win probability of the home team before the play (numeric)</p></li>
+<li><p><code>preSnapVisitorTeamWinProbability</code>: The win probability of the visiting team before the play (numeric)</p></li>
+<li><p><code>expectedPoints</code>: Expected points on this play (numeric)</p></li>
+<li><p><code>offenseFormation</code>: Formation used by possession team (text)</p></li>
+<li><p><code>receiverAlignment</code>: Enumerated as 0x0, 1x0, 1x1, 2x0, 2x1, 2x2, 3x0, 3x1, 3x2 (text)</p></li>
+<li><p><code>playClockAtSnap</code>: What the play clock value was at time of snap (numeric)</p></li>
+<li><p><code>passResult</code>: Dropback outcome of the play (<code>C</code>: Complete pass, <code>I</code>: Incomplete pass, <code>S</code>: Quarterback sack, <code>IN</code>: Intercepted pass, <code>R</code>: Scramble, text)</p></li>
+<li><p><code>passLength</code>: The distance beyond the LOS that the ball traveled not including yards into the endzone. If thrown behind LOS, the value is negative. (numeric)</p></li>
+<li><p><code>targetX</code>: The x-coordinate of the targeted receiver when the pass arrived (numeric)</p></li>
+<li><p><code>targetY</code>: The y-coordinate of the targeted receiver when the pass arrived (numeric)</p></li>
+<li><p><code>playAction</code>: Boolean indicating whether there was play-action on the play (Boolean)</p></li>
+<li><p><code>dropbackType</code>: The type of drop back after the snap by the QB (Traditional, Designed Rollout, Scramble, Scramble Rollout, Designed Rollout Left, Designed Rollout Right, Scramble Rollout Left, Scramble Rollout Right, Designed Run, QB Draw, Rollout, text)</p></li>
+<li><p><code>dropbackDistance</code>: The distance the QB dropped back (yards) behind the center after the snap (numeric)</p></li>
+<li><p><code>passLocationType</code>: The location type of where the QB was at the time of throw (Inside Tackle Box, Outside Left, Outside Right, Unknown, text)</p></li>
+<li><p><code>timeToThrow</code>: The time (secs) elapsed between snap and pass (numeric)</p></li>
+<li><p><code>timeInTackleBox</code>: The amount of time the QB spent inside the tackle box (numeric)</p></li>
+<li><p><code>timeToSack</code>: The time from snap to the time the QB was sacked (numeric)</p></li>
+<li><p><code>passTippedAtLine</code>: Boolean indicating whether the pass was tipped at the line of scrimmage (Boolean)</p></li>
+<li><p><code>unblockedPressure</code>: Boolean indicating whether there was pressure from an unblocked player (Boolean)</p></li>
+<li><p><code>qbSpike</code>: Boolean indicating whether the play was a QB Spike (Boolean)</p></li>
+<li><p><code>qbKneel</code>: Whether or not the play was a QB Kneel (numeric)</p></li>
+<li><p><code>qbSneak</code>: Whether or not the play was a QB Sneak (numeric)</p></li>
+<li><p><code>rushLocationType</code>: The direction the runner ran based on where the offensive linemen were during the play (Inside left, Inside right, Outside left, Outside right, Unknown, text)</p></li>
+<li><p><code>penaltyYards</code>: yards gained by offense by penalty (numeric)</p></li>
+<li><p><code>prePenaltyYardsGained</code>: Net yards gained by the offense, before penalty yardage (numeric)</p></li>
+<li><p><code>yardsGained</code>: Net yards gained by the offense, including penalty yardage (numeric)</p></li>
+<li><p><code>homeTeamWinProbabilityAdded</code>: Win probability delta for home team (numeric)</p></li>
+<li><p><code>visitorTeamWinProbabilityAdded</code>: Win probability delta for visitor team (numeric)</p></li>
+<li><p><code>expectedPointsAdded</code>: Expected points added on this play (numeric)</p></li>
+<li><p><code>isDropback</code>: Boolean indicating whether the QB dropped back, meaning the play resulted in a pass, sack, or scramble (Boolean)</p></li>
+<li><p><code>pff_runConceptPrimary</code>: The primary run concept on the play (text)</p></li>
+<li><p><code>pff_runConceptSecondary</code>: The secondary run concept on the play (text)</p></li>
+<li><p><code>pff_runPassOption</code>: Whether or not the play was a run-pass option (numeric)</p></li>
+<li><p><code>pff_passCoverage</code>: The pass coverage concept employed by the defense on the play (text)</p></li>
+<li><p><code>pff_manZone</code>: Whether the defense employed man or zone coverage on the play (text)</p></li>
+</ul>
+</section>
+<section id="player-play-data" class="level4" data-number="1.2.1.3">
+<h4 data-number="1.2.1.3" class="anchored" data-anchor-id="player-play-data"><span class="header-section-number">1.2.1.3</span> <strong>Player Play data</strong></h4>
+<ul>
+<li><p><strong><code>gameId</code></strong>: Game identifier, unique (numeric)</p></li>
+<li><p><strong><code>playId</code></strong>: Play identifier, not unique across games (numeric)</p></li>
+<li><p><strong><code>nflId</code></strong>: Player identification number, unique across players (numeric)</p></li>
+<li><p><code>teamAbbr</code>: The team abbreviation for the team the player plays for (text)</p></li>
+<li><p><code>hadRushAttempt</code>: Whether or not the player had a rushing attempt on this play (numeric)</p></li>
+<li><p><code>rushingYards</code>: The rush yards accrued by the player on this play (numeric)</p></li>
+<li><p><code>hadDropback</code>: Whether or not the player dropped back on this play (numeric)</p></li>
+<li><p><code>passingYards</code>: The pass yards accrued by the player on this play (numeric)</p></li>
+<li><p><code>sackYardsOffense</code>: The yards lost by the player via a sack on this play (numeric)</p></li>
+<li><p><code>hadPassReception</code>: Whether or not the player caught a pass on this play (numeric)</p></li>
+<li><p><code>receivingYards</code>: The receiving yards accrued by the player on this play (numeric)</p></li>
+<li><p><code>wasTargettedReceiver</code>: Whether or not the player was the intended receiver on this play (numeric)</p></li>
+<li><p><code>yardageGainedAfterTheCatch</code>: The yards gained after the catch was made by the player on this play (numeric)</p></li>
+<li><p><code>fumbles</code>: The number of fumbles by the player on this play (numeric)</p></li>
+<li><p><code>fumbleLost</code>: Whether or not the player lost a fumble to the opposing team on this play (numeric)</p></li>
+<li><p><code>fumbleOutOfBounds</code>: Whether or not the player fumbled the ball out of bounds on this play (numeric)</p></li>
+<li><p><code>assistedTackle</code>: Whether or not the player required an assist to make a tackle on this play (numeric)</p></li>
+<li><p><code>forcedFumbleAsDefense</code>: Whether or not the player forced a fumble by the opposing team on this play (numeric)</p></li>
+<li><p><code>halfSackYardsAsDefense</code>: The yards conceded by the offense because of a half-sack by the player on this play (numeric)</p></li>
+<li><p><code>passDefensed</code>: Whether or not a passing play was stopped by the player on this play (numeric)</p></li>
+<li><p><code>quarterbackHit</code>: Whether or not the player recorded a QB hit on this play (numeric)</p></li>
+<li><p><code>sackYardsAsDefense</code>: The yards conceded by the offense because of a sack by the player on this play (numeric)</p></li>
+<li><p><code>safetyAsDefense</code>: Whether or not the player forced a safety on this play (numeric)</p></li>
+<li><p><code>soloTackle</code>: Whether or not the player recorded a solo tackle on this play (numeric)</p></li>
+<li><p><code>tackleAssist</code>: Whether or not the player was awarded an assisted tackle on this play (numeric)</p></li>
+<li><p><code>tackleForALoss</code>: Whether or not the player recorded a tackle behind the line of scrimmage on this play (numeric)</p></li>
+<li><p><code>tackleForALossYardage</code>: The yards conceded by the offense because of a tackle behind the line of scrimmage by the player on this play (numeric)</p></li>
+<li><p><code>hadInterception</code>: Whether or not the player intercepted a pass on this play (numeric)</p></li>
+<li><p><code>interceptionYards</code>: The yards returned by the player on an intercepted pass on this play (numeric)</p></li>
+<li><p><code>fumbleRecoveries</code>: The number of fumbles recovered by the player on this play (numeric)</p></li>
+<li><p><code>fumbleRecoveryYards</code>: The yards returned by the player on a fumble recovery on this play (numeric)</p></li>
+<li><p><code>wasInitialPassRusher</code>: Whether or not the player was the initial pass rusher on this play (numeric)</p></li>
+<li><p><code>penaltyNames</code>: The names of all the penalties that were called on this player on this play (text)</p></li>
+<li><p><code>causedPressure</code>: Boolean indicating whether the player pressured the QB, defined as achieving a peak pressure probability greater than or equal to 0.75 over the course of a dropback (Boolean)</p></li>
+<li><p><code>timeToPressureAsPassRusher</code>: The time elapsed from snap to the first instance of this player reaching a pressure probability greater than or equal to 0.75 (numeric)</p></li>
+<li><p><code>getOffAsPassRusher</code>: The time it took for this player to cross the line of scrimmage as a pass rusher after the ball was snapped (numeric)</p></li>
+<li><p><code>inMotionAtBallSnap</code>: Boolean indicating whether the player was in motion at snap; Rule: If a player is moving faster than 0.62 y/s in the window 0.4 seconds prior to the ball snap, and has moved at least 1.2 yards in that window. (Boolean)</p></li>
+<li><p><code>shiftSinceLineset</code>: Boolean indicating whether the player shifted since the lineset; Rule: Each player has their own lineset moment, and whether they shift is based on if they move more than 2.5 yards from where they were at their lineset moment. (Boolean)</p></li>
+<li><p><code>motionSinceLineset</code>: Boolean indicating whether the player went in motion after they were initially set at the line on this play (Boolean)</p></li>
+<li><p><code>wasRunningRoute</code>: Boolean indicating if the player was running a route on this play (Boolean)</p></li>
+<li><p><code>routeRan</code>: The name of the route ran by the player on this play (text)</p></li>
+<li><p><code>blockedPlayerNFLId1</code>: The NFL player ID of the primary opponent being blocked by the player on this play (numeric)</p></li>
+<li><p><code>blockedPlayerNFLId2</code>: The NFL player ID of the secondary opponent being blocked by the player on this play (numeric)</p></li>
+<li><p><code>blockedPlayerNFLId3</code>: The NFL player ID of the tertiary opponent being blocked by the player on this play (numeric)</p></li>
+<li><p><code>pressureAllowedAsBlocker</code>: Whether or not any of any of the pass rushers that the blocker had a true matchup against recorded a pressure on this play (numeric)</p></li>
+<li><p><code>timeToPressureAllowedAsBlocker</code>: The time elapsed from snap to the first instance of a pass rusher who the blocker had a true matchup against achieving a pressure probability above 0.75 on this play (numeric)</p></li>
+<li><p>pff_defensiveCoverageAssignment: The specific defensive coverage assignment given to the player on this play (text)</p>
+<ul>
+<li><p>Possible values:</p>
+<ul>
+<li><p>MAN: Man</p></li>
+<li><p>2R: Deep Half Right</p></li>
+<li><p>2L: Deep Half Left</p></li>
+<li><p>3R: Deep Third Right</p></li>
+<li><p>3M: Deep Third Middle</p></li>
+<li><p>3L: Deep Third Left</p></li>
+<li><p>4OR: Quarters Outside Right</p></li>
+<li><p>4OL: Quarters Outside Left</p></li>
+<li><p>4IR: Quarters Inside Right</p></li>
+<li><p>4IL: Quarters Inside Left</p></li>
+<li><p>FR: Flat Zone Right</p></li>
+<li><p>FL: Flat Zone Left</p></li>
+<li><p>HCR: Hook/Curl Right</p></li>
+<li><p>HCL: Hook/Curl Left</p></li>
+<li><p>CFR: Curl/Flat Right</p></li>
+<li><p>CFL: Curl/Flat Left</p></li>
+<li><p>HOL: Hole</p></li>
+<li><p>DF: Deep Free</p></li>
+<li><p>PRE: Prevent</p></li>
+</ul></li>
+</ul></li>
+<li><p><code>pff_primaryDefensiveCoverageMatchupNflId</code>: The NFL player ID of the opponent tagged as the primary matchup in coverage for the defender on this play (numeric)</p></li>
+<li><p><code>pff_secondaryDefensiveCoverageMatchupNflId</code>: The NFL player ID of the opponent tagged as the secondary matchup in coverage for the defender on this play (numeric)</p></li>
+</ul>
+</section>
+<section id="player-data" class="level4" data-number="1.2.1.4">
+<h4 data-number="1.2.1.4" class="anchored" data-anchor-id="player-data"><span class="header-section-number">1.2.1.4</span> <strong>Player data</strong></h4>
+<ul>
+<li><p><strong><code>nflId</code></strong>: Player identification number, unique across players (numeric)</p></li>
+<li><p><code>height</code>: Player height (text)</p></li>
+<li><p><code>weight</code>: Player weight (numeric)</p></li>
+<li><p><code>birthDate</code>: Date of birth (YYYY-MM-DD)</p></li>
+<li><p><code>collegeName</code>: Player college (text)</p></li>
+<li><p><code>position</code>: Official player position (text)</p></li>
+<li><p><code>displayName</code>: Player name (text)</p></li>
+</ul>
+</section>
+<section id="tracking-data" class="level4" data-number="1.2.1.5">
+<h4 data-number="1.2.1.5" class="anchored" data-anchor-id="tracking-data"><span class="header-section-number">1.2.1.5</span> <strong>Tracking data</strong></h4>
+<p>Files <code>tracking_week_[week].csv</code> contains player tracking data from week <code>[week]</code>.</p>
+<ul>
+<li><p><strong><code>gameId</code></strong>: Game identifier, unique (numeric)</p></li>
+<li><p><strong><code>playId</code></strong>: Play identifier, not unique across games (numeric)</p></li>
+<li><p><strong><code>nflId</code></strong>: Player identification number, unique across players. When value is NA, row corresponds to ball. (numeric)</p></li>
+<li><p><code>frameType</code>: Whether frame was before, during or after snap. (text)</p></li>
+<li><p><code>displayName</code>: Player name (text)</p></li>
+<li><p><code>frameId</code>: Frame identifier for each play, starting at 1 (numeric)</p></li>
+<li><p><code>time</code>: Time stamp of play (time, yyyy-mm-dd, hh:mm:ss)</p></li>
+<li><p><code>jerseyNumber</code>: Jersey number of player (numeric)</p></li>
+<li><p><code>club</code>: Team abbrevation of corresponding player (text)</p></li>
+<li><p><code>playDirection</code>: Direction that the offense is moving (left or right)</p></li>
+<li><p><code>x</code>: Player position along the long axis of the field, 0 - 120 yards. See Figure 1 below. (numeric)</p></li>
+<li><p><code>y</code>: Player position along the short axis of the field, 0 - 53.3 yards. See Figure 1 below. (numeric)</p></li>
+<li><p><code>s</code>: Speed in yards/second (numeric)</p></li>
+<li><p><code>a</code>: Acceleration in yards/second^2 (numeric)</p></li>
+<li><p><code>dis</code>: Distance traveled from prior time point, in yards (numeric)</p></li>
+<li><p><code>o</code>: Player orientation (deg), 0 - 360 degrees (numeric)</p></li>
+<li><p><code>dir</code>: Angle of player motion (deg), 0 - 360 degrees (numeric)</p></li>
+<li><p><code>event</code>: Tagged play details, including moment of ball snap, pass release, pass catch, tackle, etc (text)</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="technical-contributions" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="technical-contributions"><span class="header-section-number">1.3</span> Technical Contributions</h2>
+<p>Though a lot of prior work was already done, there were contributions made. First was the custom data engineering and pipeline. Integrating and cleaning four complex NFL datasets (player tracking, plays, player_play, games) to create a unified, analysis-ready database for rush plays. Another was automated feature engineering: e.g., construction of categorical variables, dynamic filtering by position/player, and contextual play metrics (e.g., success by down/yards-to-go).</p>
+</section>
+<section id="constraints" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="constraints"><span class="header-section-number">1.4</span> Constraints</h2>
+<p>There are a few constraints to keep in mind for this project:</p>
+<ul>
+<li><p><strong>Data Completeness:</strong> The analysis relies on the provided player tracking, play, and game data. Any missing, incomplete, or inconsistent records could influence results.</p>
+<ul>
+<li>In this chain of thought, the data is from the 2021 season, so we can’t account for changing trends in past few seasons.</li>
+</ul></li>
+<li><p><strong>Feature Availability:</strong> Only features/variables present in the original datasets (e.g., player position, formation, run concept, play context) can be used for modeling and analysis.</p></li>
+<li><p><strong>Time Frame:</strong> The dataset is limited to the seasons, weeks, and games made available, which may not capture temporal changes, rare play types, or recent trends.</p></li>
+<li><p><strong>Project Timeline Limitation:</strong> Due to the limited time frame not as much analysis could be done. An interesting aspect to investigate would have been offensive and defensive skill levels as different teams have varying run defense quality (AKA any team playing Lamar Jackson).</p></li>
+</ul>
+</section>
+<section id="prior-work" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="prior-work"><span class="header-section-number">1.5</span> Prior Work</h2>
+<p>There has been a substantial amount of work done using the NFL Big Data Bowl data set. A study by Stat CMU <span class="citation" data-cites="noauthor_sacks_nodate"><span>“Sacks <span>Big</span> <span>Data</span> <span>Bowl</span> <span>Workshop</span>”</span> (<a href="#ref-noauthor_sacks_nodate" role="doc-biblioref">n.d.</a>)</span> had a very good study of sack analysis. Vanderbilt had an excellent study of tackling predictions. Another interesting study was of defender movement analysis <span class="citation" data-cites="noauthor_every_nodate"><span>“Every <span>Step</span> <span>You</span> <span>Take</span>: <span>Measuring</span> <span>A</span> <span>Defender</span>’s <span>Moves</span>”</span> (<a href="#ref-noauthor_every_nodate" role="doc-biblioref">n.d.</a>)</span> done by Hassaan Inayatali from the University of Toronto. There is so much more work that has been done as well by other participants in the competition.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-noauthor_every_nodate" class="csl-entry" role="listitem">
+<span>“Every <span>Step</span> <span>You</span> <span>Take</span>: <span>Measuring</span> <span>A</span> <span>Defender</span>’s <span>Moves</span>.”</span> n.d. Accessed August 6, 2025. <a href="https://kaggle.com/code/hassaaninayatali/every-step-you-take-measuring-a-defender-s-moves">https://kaggle.com/code/hassaaninayatali/every-step-you-take-measuring-a-defender-s-moves</a>.
+</div>
+<div id="ref-nflbig" class="csl-entry" role="listitem">
+<span>“NFL Big Data Bowl 2025.”</span> n.d. <a href="https://kaggle.com/nfl-big-data-bowl-2025">https://kaggle.com/nfl-big-data-bowl-2025</a>.
+</div>
+<div id="ref-noauthor_sacks_nodate" class="csl-entry" role="listitem">
+<span>“Sacks <span>Big</span> <span>Data</span> <span>Bowl</span> <span>Workshop</span>.”</span> n.d. Accessed August 6, 2025. <a href="https://www.stat.cmu.edu/cmsac/conference/2022/workshop/slides.html#1">https://www.stat.cmu.edu/cmsac/conference/2022/workshop/slides.html#1</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Question.html" class="pagination-link" aria-label="Question">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Question</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
